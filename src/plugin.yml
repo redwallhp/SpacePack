@@ -1,0 +1,12 @@
+name: AIO-Jetpacks
+main: de.freestylecrafter.aio.jetpacks.AIOPlugin
+version: 1.0.4
+commands:
+    jetpacks:
+        description: AIO Jetpacks help
+        usage: /jetpacks
+        permission: aio.jetpacks.command.base
+permissions:
+    aio.jetpacks.command.base:
+        description: Allows you to use /jetpacks
+        default: op
