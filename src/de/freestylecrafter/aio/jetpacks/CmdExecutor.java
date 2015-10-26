@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +12,8 @@ import org.bukkit.entity.Player;
 
 public class CmdExecutor implements CommandExecutor, TabCompleter
 {
+	//Localization implemented
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
@@ -22,7 +23,7 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 			{
 				if (!PermissionsHelper.canCommandBase((Player) sender))
 				{
-					sender.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
+					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-general-nopermissions"));
 					return true;
 				}
 			}
@@ -33,7 +34,7 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 				{
 					if (!PermissionsHelper.canCommandCheat((Player) sender))
 					{
-						sender.sendMessage(ChatColor.RED + "You don't have permission to cheat jetpacks by command!");
+						sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-cheat-nopermissions"));
 						return true;
 					}
 				}
@@ -47,8 +48,8 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 					}
 					else
 					{
-						sender.sendMessage("You are not a player, but you can cheat someone else a jetpack!");
-						sender.sendMessage("Usage: /jetpacks cheat <jetpack> <player>");
+						sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-cheat-console"));
+						sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-cheat-usage"));
 						return true;
 					}
 				}
@@ -62,7 +63,7 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 				}
 				else
 				{
-					sender.sendMessage("Usage: /jetpacks cheat <jetpack> [<player>]");
+					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-cheat-usage"));
 				}
 			}
 			else if (args.length >= 1 && args[0].equalsIgnoreCase("reload"))
@@ -71,7 +72,7 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 				{
 					if (!PermissionsHelper.canCommandReload((Player) sender))
 					{
-						sender.sendMessage(ChatColor.RED + "You don't have permission to reload the config!");
+						sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-reload-nopermissions"));
 						return true;
 					}
 				}
@@ -79,6 +80,7 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 				try
 				{
 					AIOPlugin.getInstance().getConfigManager().reloadConfig();
+					AIOPlugin.getInstance().getLocalizationManager().reloadConfig();
 					if (!AIOPlugin.getInstance().getServer().getOnlinePlayers().isEmpty() && AIOPlugin.getInstance().getJetpackManager() != null)
 					{
 						for (Player p : AIOPlugin.getInstance().getServer().getOnlinePlayers())
@@ -94,35 +96,35 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 							AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(p);
 						}
 					}
-					sender.sendMessage(ChatColor.GREEN + "Reloaded AIO-Jetpacks successfully!");
+					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-reload-success"));
 					return true;
 				} catch (IOException e)
 				{
 					AIOPlugin.getInstance().getLogger().warning(e.toString());
-					sender.sendMessage(ChatColor.RED + "Reloading failed. Please check console.");
+					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-reload-failed"));
 					return true;
 				}
 			}
 			else
 			{
 				if (args.length >= 1)
-					sender.sendMessage(ChatColor.RED + "Invalid command.");
+					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-unknown-command"));
 				
-				sender.sendMessage(ChatColor.GREEN + "== AIO Jetpacks help ==");
+				sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-help-header"));
 				
 				boolean canCommandCheat = (sender instanceof Player ? PermissionsHelper.canCommandCheat((Player) sender) : true);
 				boolean canCommandReload = (sender instanceof Player ? PermissionsHelper.canCommandReload((Player) sender) : true);
 				if (!canCommandCheat && !canCommandReload)
 				{
-					sender.sendMessage("There is no help available, because you are not allowed to use any commands.");
+					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-help-deny"));
 				}
 				else
 				{
 					if (canCommandCheat)
-						sender.sendMessage("/jetpacks cheat <jetpack> [<player>] Allows you to manually cheat jetpacks");
+						sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-help-cheat"));
 					
 					if (canCommandReload)
-						sender.sendMessage("/jetpacks reload Reload the plugin and it's configuration");
+						sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-help-reload"));
 				}
 				return true;
 			}
@@ -151,31 +153,31 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 						{
 							i.setCraftTimestamp();
 							to.getInventory().addItem(i.getItem());
-							sender.sendMessage("Gave player " + to.getName() + " a jetpack by name #" + profile.getName());
+							sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-give-success", "").replace("%playername%", to.getName()).replace("%profilename%", profile.getName()));
 							return;
 						}
 					}
 					else
 					{
-						sender.sendMessage(to.getName() + " doesn't have enough space in his inventory to cheat him a jetpack by name #" + profile.getName());
+						sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-give-fail", "").replace("%playername%", to.getName()));
 						return;
 					}
 				}
 				else
 				{
-					sender.sendMessage("You don't have permission to cheat someone a jetpack by name #" + profile.getName());
+					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-give-nopermissions", ""));
 					return;
 				}
 			}
 			else
 			{
-				sender.sendMessage("Couldn't find jetpack by name #" + profArg);
+				sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-give-invalidname", "").replace("%jetpackname%", profArg));
 				return;
 			}
 		}
 		else
 		{
-			sender.sendMessage("The player " + to.getName() + " is not online!");
+			sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-give-offline", "").replace("%playername%", to.getName()));
 			return;
 		}
 	}

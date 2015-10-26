@@ -33,6 +33,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	private static AIOPlugin instance;
 	
 	private ConfigurationManager configManager;
+	private LocalizationManager localizationManager;
 	private JetpackManager jetpackManager;
 	
 	private CmdExecutor cmdExecutor;
@@ -45,6 +46,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		try
 		{
 			this.configManager = new ConfigurationManager();
+			this.localizationManager = new LocalizationManager();
 		} catch (IOException e)
 		{
 			this.getLogger().warning(e.toString());
@@ -93,6 +95,11 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	public ConfigurationManager getConfigManager()
 	{
 		return this.configManager;
+	}
+	
+	public LocalizationManager getLocalizationManager()
+	{
+		return this.localizationManager;
 	}
 	
 	public static AIOPlugin getInstance()
@@ -226,7 +233,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 			}
 			else
 			{
-				p.sendMessage(PermissionsHelper.MESSAGE_NOT_ALLOWED_USE);
+				p.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-use-deny"));
 			}
 			e.setCancelled(true);
 		}
@@ -247,7 +254,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 				}
 				else
 				{
-					p.sendMessage(PermissionsHelper.MESSAGE_NOT_ALLOWED_USE);
+					p.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-use-deny"));
 				}
 				e.setCancelled(true);
 			}
@@ -270,7 +277,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 				}
 				else
 				{
-					p.sendMessage(PermissionsHelper.MESSAGE_NOT_ALLOWED_USE);
+					p.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-use-deny"));
 				}
 				e.setCancelled(true);
 			}
@@ -304,7 +311,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		
 		if (currentItem != null && !PermissionsHelper.canCraftJetpack(currentItem, (Player) e.getWhoClicked()))
 		{
-			((Player) e.getWhoClicked()).sendMessage(PermissionsHelper.MESSAGE_NOT_ALLOWED_CRAFT);
+			((Player) e.getWhoClicked()).sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-craft-deny"));
 			e.setCancelled(true);
 			return;
 		}
@@ -374,7 +381,8 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 					}
 					else
 					{
-						p.sendMessage(PermissionsHelper.MESSAGE_NOT_ALLOWED_USE);
+						
+						p.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-use-deny"));
 					}
 				}
 				e.setCancelled(true);
