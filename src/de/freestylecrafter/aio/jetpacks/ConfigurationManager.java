@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigurationManager
@@ -53,18 +52,7 @@ public class ConfigurationManager
 			
 			changedConfig = true;
 		}
-		if (!this.config.isString("message-equip"))
-		{
-			this.config.set("message-equip", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%"  + ChatColor.GREEN + " is now equipped." + ChatColor.YELLOW + " [Double jump to use]");
-			
-			changedConfig = true;
-		}
-		if (!this.config.isString("message-unequip"))
-		{
-			this.config.set("message-unequip", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%" + ChatColor.RED + " is no longer equipped!");
-			
-			changedConfig = true;
-		}
+		
 		if (!this.config.isConfigurationSection("jetpacks"))
 		{
 			this.config.set("jetpacks.example.displayName", "Example Jetpack");
