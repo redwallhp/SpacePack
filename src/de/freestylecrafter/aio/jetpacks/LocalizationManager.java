@@ -131,6 +131,18 @@ public class LocalizationManager
 			this.languageConfig.set("message-general-nopermissions", ChatColor.RED + "You don't have permission to use this command!");
 			changedConfig = true;
 		}
+		if (!this.languageConfig.isString("message-equip"))
+		{
+			this.languageConfig.set("message-equip", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%"  + ChatColor.GREEN + " is now equipped." + ChatColor.YELLOW + " [Double jump to use]");
+			
+			changedConfig = true;
+		}
+		if (!this.languageConfig.isString("message-unequip"))
+		{
+			this.languageConfig.set("message-unequip", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%" + ChatColor.RED + " is no longer equipped!");
+			
+			changedConfig = true;
+		}
 		
 		if (changedConfig)
 		{

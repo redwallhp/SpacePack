@@ -150,7 +150,7 @@ public class JetpackManager
 			}
 			
 			String name = (profile == null || profile.getName() == null ? "unknown" :  profile.getName());
-			p.sendMessage(AIOPlugin.getInstance().getConfigManager().getConfiguration().getString("message-unequip", "").replace("%name%", "#" + name));
+			p.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-unequip", "").replace("%name%", "#" + name));
 		}
 	}
 	
@@ -190,7 +190,7 @@ public class JetpackManager
 			}
 			
 			String name = (i.getProfile() == null || i.getProfile().getName() == null ? "unknown" :  i.getProfile().getName());
-			p.sendMessage(AIOPlugin.getInstance().getConfigManager().getConfiguration().getString("message-equip", "").replace("%name%", "#" + name));
+			p.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-equip", "").replace("%name%", "#" + name));
 		}
 	}
 }
