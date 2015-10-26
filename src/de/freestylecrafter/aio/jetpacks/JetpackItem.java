@@ -12,12 +12,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class JetpackItem
 {
-	private static final String LORE_PLUGIN_IDENTIFIER = "§r§a> Jetpack";
-	private static final String LORE_PROFILE_NAME = "§r§7#%var%";
-	private static final String LORE_FUEL_LEVEL = "§r§eFuel: %var%";
+	private static final String LORE_PLUGIN_IDENTIFIER = "\u00A7r\u00A7a> Jetpack";
+	private static final String LORE_PROFILE_NAME = "\u00A7r\u00A77#%var%";
+	private static final String LORE_FUEL_LEVEL = "\u00A7r\u00A7eFuel: %var%";
 	private static final String LORE_FUEL_LEVEL_COSMETIC_MAX = "/%var%";
-	private static final String LORE_COSMETIC_FUEL_TYPE = "§r§eFuel type: %var%";
-	private static final String LORE_ADMINISTRATIONAL_TIMESTAMP_CRAFTED = "§r§8C: %var%";
+	private static final String LORE_COSMETIC_FUEL_TYPE = "\u00A7r\u00A7eFuel type: %var%";
+	private static final String LORE_ADMINISTRATIONAL_TIMESTAMP_CRAFTED = "\u00A7r\u00A78C: %var%";
 	
 	private Jetpack jetpackProfile;
 	private ItemStack item;
