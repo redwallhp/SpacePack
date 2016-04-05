@@ -3,6 +3,7 @@ package de.freestylecrafter.aio.jetpacks;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -66,10 +67,9 @@ public class ConfigurationManager
 			this.config.set("jetpacks.example.infiniteFuel", false);
 			this.config.set("jetpacks.example.fuel", "COAL");
 			this.config.set("jetpacks.example.ticksPerFuel", 300);
-			this.config.set("jetpacks.example.normalSpeed", 1.0);
-			this.config.set("jetpacks.example.fastSpeed", 1.5);
-			this.config.set("jetpacks.example.slowSpeed", 0.5);
-			this.config.set("jetpacks.example.effects.SPEED", 2);
+			this.config.set("jetpacks.example.normalSpeed", 0.1);
+			this.config.set("jetpacks.example.fastSpeed", 0.1);
+			this.config.set("jetpacks.example.effects", Collections.emptyMap());
 			
 			changedConfig = true;
 		}

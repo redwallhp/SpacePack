@@ -23,7 +23,6 @@ public class Jetpack
 	private int ticksPerFuel;
 	private double normalSpeed;
 	private double fastSpeed;
-	private double slowSpeed;
 	private HashMap<PotionEffectType, Integer> potionEffects;
 	
 	public Jetpack(ConfigurationSection section) throws IllegalArgumentException
@@ -81,20 +80,14 @@ public class Jetpack
 				}
 				if (!section.isDouble("normalSpeed"))
 				{
-					section.set("normalSpeed", 1.0);
+					section.set("normalSpeed", 0.1);
 					AIOPlugin.getInstance().getLogger().info("Jetpack profile #" + section.getName() + " is missing 'normalSpeed', setting to default.");
 					needToSaveConfig = true;
 				}
 				if (!section.isDouble("fastSpeed"))
 				{
-					section.set("fastSpeed", 1.5);
+					section.set("fastSpeed", 0.1);
 					AIOPlugin.getInstance().getLogger().info("Jetpack profile #" + section.getName() + " is missing 'fastSpeed', setting to default.");
-					needToSaveConfig = true;
-				}
-				if (!section.isDouble("slowSpeed"))
-				{
-					section.set("slowSpeed", 0.5);
-					AIOPlugin.getInstance().getLogger().info("Jetpack profile #" + section.getName() + " is missing 'slowSpeed', setting to default.");
 					needToSaveConfig = true;
 				}
 				if (!section.isConfigurationSection("effects"))
@@ -148,12 +141,6 @@ public class Jetpack
 				if (this.fastSpeed <= 0.0)
 				{
 					AIOPlugin.getInstance().getLogger().info("Jetpack profile #" + section.getName() + " has invalid 'fastSpeed', must be greater than 0.0.");
-					throw new IllegalArgumentException();
-				}
-				this.slowSpeed = section.getDouble("slowSpeed");
-				if (this.slowSpeed <= 0.0)
-				{
-					AIOPlugin.getInstance().getLogger().info("Jetpack profile #" + section.getName() + " has invalid 'slowSpeed', must be greater than 0.0.");
 					throw new IllegalArgumentException();
 				}
 				
@@ -351,11 +338,6 @@ public class Jetpack
 	public double getFastSpeed()
 	{
 		return this.fastSpeed;
-	}
-	
-	public double getSlowSpeed()
-	{
-		return this.slowSpeed;
 	}
 	
 	public HashMap<PotionEffectType, Integer> getPotionEffects()

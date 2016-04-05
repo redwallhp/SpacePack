@@ -394,9 +394,8 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 			}
 			else
 			{
-				item.setEnabled(true);
+                item.setEnabled(true);
 			}
-			e.setCancelled(true);
 		}
 	}
 	
@@ -417,18 +416,22 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 					if (item.getFuel() <= 0)
 					{
 						item.setEnabled(false);
+                        e.getPlayer().setFlying(false);
 						return;
 					}
 				}
 				item.useFuel(1);
 			}
 			
-			if (p.isSprinting())
-				p.setVelocity(p.getLocation().getDirection().multiply(item.getProfile().getFastSpeed()));
-			else if (p.isSneaking())
-				p.setVelocity(p.getLocation().getDirection().multiply(item.getProfile().getSlowSpeed()));
-			else
-				p.setVelocity(p.getLocation().getDirection().multiply(item.getProfile().getNormalSpeed()));
+			if (p.isSprinting()) {
+                //p.setVelocity(p.getLocation().getDirection().multiply(item.getProfile().getFastSpeed()));
+                p.setFlySpeed((float) item.getProfile().getFastSpeed());
+            }
+			else {
+                //p.setVelocity(p.getLocation().getDirection().multiply(item.getProfile().getNormalSpeed()));
+                p.setFlySpeed((float) item.getProfile().getNormalSpeed());
+            }
+
 		}
 	}
 }
