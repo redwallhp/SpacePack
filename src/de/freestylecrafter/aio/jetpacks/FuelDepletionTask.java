@@ -23,10 +23,23 @@ public class FuelDepletionTask extends BukkitRunnable {
     public void run() {
         for (Map.Entry<UUID, JetpackItem> entry : plugin.getJetpackManager().getActiveJetpackItems().entrySet()) {
             Player player = plugin.getServer().getPlayer(entry.getKey());
-            JetpackItem item = entry.getValue();
-            if (item.isEnabled()) {
-                // this is where we're going to move fuel depletion to, so it's continuous
+            handleFuelDepletion(player, entry.getValue());
+        }
+    }
+
+
+    private void handleFuelDepletion(Player p, JetpackItem item) {
+        if (item.isEnabled()) {
+            if (item.getProfile().isInfiniteFuel()) return;
+            if (item.getFuel() <= 0) {
+                item.reFuel(p.getInventory());
+                if (item.getFuel() <= 0) {
+                    item.setEnabled(false);
+                    p.setFlying(false);
+                    return;
+                }
             }
+            item.useFuel(1);
         }
     }
 

@@ -390,46 +390,25 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerToggleFlight(PlayerToggleFlightEvent e)
-	{
+	public void onPlayerToggleFlight(PlayerToggleFlightEvent e) {
 		this.getJetpackManager().checkJetpackItemForPlayer(e.getPlayer());
 		JetpackItem item = this.getJetpackManager().getJetpackItemForPlayer(e.getPlayer());
-		if (item != null)
-		{
-			if (item.isEnabled())
-			{
+		if (item != null) {
+			if (item.isEnabled()) {
 				item.setEnabled(false);
 			}
-			else
-			{
+			else {
                 item.setEnabled(true);
 			}
 		}
 	}
 	
 	@EventHandler
-	public void onPlayerMove(PlayerMoveEvent e)
-	{
+	public void onPlayerMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
-		
 		this.getJetpackManager().checkJetpackItemForPlayer(p);
 		JetpackItem item = this.getJetpackManager().getJetpackItemForPlayer(e.getPlayer());
-		if (item != null && item.isEnabled())
-		{
-			if (!item.getProfile().isInfiniteFuel())
-			{
-				if (item.getFuel() <= 0)
-				{
-					item.reFuel(p.getInventory());
-					if (item.getFuel() <= 0)
-					{
-						item.setEnabled(false);
-                        e.getPlayer().setFlying(false);
-						return;
-					}
-				}
-				item.useFuel(1);
-			}
+		if (item != null && item.isEnabled()) {
 			
 			if (p.isSprinting()) {
                 p.setFlySpeed((float) item.getProfile().getFastSpeed());
