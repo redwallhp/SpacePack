@@ -24,7 +24,7 @@ public class PermissionsHelper
 		if (i == null || p == null)
 			return false;
 		
-		return PermissionsHelper.canUseJetpack(i.getProfile(), p);
+		return canUseJetpack(i.getProfile(), p);
 	}
 	
 	public static boolean canUseJetpack(Jetpack j, Player p)
@@ -47,7 +47,7 @@ public class PermissionsHelper
 		if (i == null || p == null)
 			return false;
 		
-		return PermissionsHelper.canCraftJetpack(i.getProfile(), p);
+		return canCraftJetpack(i.getProfile(), p);
 	}
 	
 	public static boolean canCraftJetpack(Jetpack j, Player p)

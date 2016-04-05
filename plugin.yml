@@ -1,6 +1,6 @@
 name: AIO-Jetpacks
 main: de.freestylecrafter.aio.jetpacks.AIOPlugin
-version: 1.0.4
+version: ${project.version}
 commands:
     jetpacks:
         description: AIO Jetpacks help

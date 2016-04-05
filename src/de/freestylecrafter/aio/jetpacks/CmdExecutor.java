@@ -13,8 +13,7 @@ import org.bukkit.entity.Player;
 public class CmdExecutor implements CommandExecutor, TabCompleter
 {
 	//Localization implemented
-	
-	@Override
+
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		if (cmd.getName().equalsIgnoreCase("jetpacks"))
@@ -182,7 +181,6 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 		}
 	}
 
-	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args)
 	{
 		if (cmd.getName().equals("jetpacks"))

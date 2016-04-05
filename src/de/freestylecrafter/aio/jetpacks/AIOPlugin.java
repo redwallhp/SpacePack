@@ -64,7 +64,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		
 		// Run this after 20 ticks because some plugins are updating variables
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
 			public void run()
 			{
 				if (!AIOPlugin.getInstance().getServer().getOnlinePlayers().isEmpty())
@@ -89,7 +88,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 			}
 		}
 		
-		this.getJetpackManager().unregisterOldRecipes();
+		if (this.getJetpackManager() != null) this.getJetpackManager().unregisterOldRecipes();
 	}
 	
 	public ConfigurationManager getConfigManager()
@@ -117,7 +116,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	{		
 		// Run this after 20 ticks because some plugins are updating variables
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
 			public void run()
 			{
 				AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(e.getPlayer());
@@ -136,7 +134,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	{
 		// Run this next Tick because bukkit and some plugins are changing variables after calling that event
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
 			public void run()
 			{
 				AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(e.getPlayer());
@@ -149,7 +146,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	{
 		// Run this next Tick because bukkit and some plugins are changing variables after calling that event
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
 			public void run()
 			{
 				AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(e.getEntity());
@@ -162,7 +158,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	{
 		// Run this after 20 ticks because some plugins are updating variables
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
 			public void run()
 			{
 				AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(e.getPlayer());
@@ -178,7 +173,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		
 		// Run this next Tick because bukkit and some plugins are changing variables after calling that event
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
 			public void run()
 			{
 				AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer((Player) e.getEntity());
@@ -192,7 +186,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		AIOPlugin.getInstance().getJetpackManager().removeJetpackItemForPlayer(e.getPlayer());
 		// Run this after 20 ticks because some plugins are updating variables
 		this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@Override
 			public void run()
 			{
 				AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(e.getPlayer());
@@ -287,7 +280,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		{
 			// Run this next Tick because bukkit and some plugins are changing variables after calling that event
 			this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-				@Override
 				public void run()
 				{
 					AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer((Player) e.getWhoClicked());
@@ -372,7 +364,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 						
 						// Run this next Tick because bukkit and some plugins are changing variables after calling that event
 						this.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-							@Override
 							public void run()
 							{
 								AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(p);
