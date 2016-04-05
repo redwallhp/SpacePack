@@ -53,6 +53,15 @@ public class ConfigurationManager
 			
 			changedConfig = true;
 		}
+
+		if (!this.config.isBoolean("sounds")) {
+			this.config.set("sounds", true);
+			changedConfig = true;
+		}
+		if (!this.config.isBoolean("trails")) {
+			this.config.set("trails", true);
+			changedConfig = true;
+		}
 		
 		if (!this.config.isConfigurationSection("jetpacks"))
 		{

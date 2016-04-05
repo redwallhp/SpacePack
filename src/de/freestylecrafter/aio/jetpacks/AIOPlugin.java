@@ -1,6 +1,8 @@
 package de.freestylecrafter.aio.jetpacks;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -27,6 +29,7 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 public class AIOPlugin extends JavaPlugin implements Listener {
 	
@@ -75,6 +78,11 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 				}
 			}
 		}, 20);
+
+        // Do recurring ticking stuff
+        new JetPackEffectsTask(this).runTaskTimer(this, 20L, 8L);
+        new FuelDepletionTask(this).runTaskTimer(this, 20L, 1L);
+
 	}
 	
 	@Override
@@ -424,11 +432,9 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 			}
 			
 			if (p.isSprinting()) {
-                //p.setVelocity(p.getLocation().getDirection().multiply(item.getProfile().getFastSpeed()));
                 p.setFlySpeed((float) item.getProfile().getFastSpeed());
             }
 			else {
-                //p.setVelocity(p.getLocation().getDirection().multiply(item.getProfile().getNormalSpeed()));
                 p.setFlySpeed((float) item.getProfile().getNormalSpeed());
             }
 
