@@ -48,12 +48,12 @@ public class LocalizationManager
 		
 		if (!this.languageConfig.isString("message-reload-success"))
 		{
-			this.languageConfig.set("message-reload-success", ChatColor.GREEN + "Reloaded AIO-Jetpacks successfully!");
+			this.languageConfig.set("message-reload-success", ChatColor.GREEN + "Reloaded jetpacks successfully!");
 			changedConfig = true;
 		}
 		if (!this.languageConfig.isString("message-reload-fail"))
 		{
-			this.languageConfig.set("message-reload-fail", ChatColor.RED + "AIO-Jetpacks reload failed! Aborted.");
+			this.languageConfig.set("message-reload-fail", ChatColor.RED + "Jetpacks reload failed! Aborted.");
 			changedConfig = true;
 		}
 		if (!this.languageConfig.isString("message-unknown-command"))
@@ -63,7 +63,7 @@ public class LocalizationManager
 		}
 		if (!this.languageConfig.isString("message-help-header"))
 		{
-			this.languageConfig.set("message-help-header", ChatColor.GREEN + "== AIO Jetpacks help ==");
+			this.languageConfig.set("message-help-header", ChatColor.GREEN + "== Jetpacks help ==");
 			changedConfig = true;
 		}
 		if (!this.languageConfig.isString("message-help-deny"))
@@ -133,14 +133,28 @@ public class LocalizationManager
 		}
 		if (!this.languageConfig.isString("message-equip"))
 		{
-			this.languageConfig.set("message-equip", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%"  + ChatColor.GREEN + " is now equipped." + ChatColor.YELLOW + " [Double jump to use]");
-			
+			this.languageConfig.set("message-equip", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%"  + ChatColor.GREEN + " is now equipped." + ChatColor.YELLOW + " [Use /jp to enable]");
 			changedConfig = true;
 		}
 		if (!this.languageConfig.isString("message-unequip"))
 		{
 			this.languageConfig.set("message-unequip", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%" + ChatColor.RED + " is no longer equipped!");
-			
+			changedConfig = true;
+		}
+		if (!this.languageConfig.isString("message-enable")) {
+			this.languageConfig.set("message-enable", ChatColor.AQUA + "[Jetpacks] " + ChatColor.GREEN + "Jetpack enabled!");
+			changedConfig = true;
+		}
+		if (!this.languageConfig.isString("message-disable")) {
+			this.languageConfig.set("message-disable", ChatColor.AQUA + "[Jetpacks] " + ChatColor.RED + "Jetpack disabled!");
+			changedConfig = true;
+		}
+		if (!this.languageConfig.isString("message-nopack")) {
+			this.languageConfig.set("message-nopack", ChatColor.AQUA + "[Jetpacks] " + ChatColor.RED + "You don't have a jetpack equipped!");
+			changedConfig = true;
+		}
+		if (!this.languageConfig.isString("message-nofuel")) {
+			this.languageConfig.set("message-nofuel", ChatColor.AQUA + "[Jetpacks] " + ChatColor.RED + "Your jetpack is out of fuel!");
 			changedConfig = true;
 		}
 		

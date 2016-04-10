@@ -27,7 +27,7 @@ public class JetPackEffectsTask extends BukkitRunnable {
         for (Map.Entry<UUID, JetpackItem> entry : plugin.getJetpackManager().getActiveJetpackItems().entrySet()) {
             Player player = plugin.getServer().getPlayer(entry.getKey());
             JetpackItem item = entry.getValue();
-            if (item.isEnabled()) {
+            if (item.isEnabled() && player.isFlying()) {
                 Location loc = player.getLocation().subtract(new Vector(0, 1, 0));
                 if (trails) player.playEffect(loc, Effect.MOBSPAWNER_FLAMES, null);
                 if (sounds) player.playSound(loc, Sound.FIZZ, 0.1f, 0.5f);

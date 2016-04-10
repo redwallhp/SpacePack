@@ -136,6 +136,7 @@ public class JetpackManager
 		if (this.activeJetpacks.containsKey(p.getUniqueId()))
 		{
 			Jetpack profile = this.activeJetpacks.get(p.getUniqueId()).getProfile();
+			this.activeJetpacks.get(p.getUniqueId()).setEnabled(false);
 			this.activeJetpacks.remove(p.getUniqueId());
 
 			if (p.getGameMode() != GameMode.CREATIVE && p.getAllowFlight())
@@ -165,9 +166,6 @@ public class JetpackManager
 
 			if (current != null && current.getItem().equals(i.getItem()))
 			{
-				if (p.getGameMode() != GameMode.CREATIVE && !p.getAllowFlight())
-					p.setAllowFlight(true);
-
 				return;
 			}
 			else
@@ -177,9 +175,6 @@ public class JetpackManager
 		if (PermissionsHelper.canUseJetpack(i, p))
 		{
 			this.activeJetpacks.put(p.getUniqueId(), i);
-
-			if (p.getGameMode() != GameMode.CREATIVE && !p.getAllowFlight())
-				p.setAllowFlight(true);
 
 			if (i.getProfile().getPotionEffects() != null && !i.getProfile().getPotionEffects().isEmpty())
 			{

@@ -1,13 +1,11 @@
 package de.freestylecrafter.aio.jetpacks;
 
-
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.Map;
 import java.util.UUID;
+
 
 public class FuelDepletionTask extends BukkitRunnable {
 
@@ -29,17 +27,31 @@ public class FuelDepletionTask extends BukkitRunnable {
 
 
     private void handleFuelDepletion(Player p, JetpackItem item) {
-        if (item.isEnabled()) {
-            if (item.getProfile().isInfiniteFuel()) return;
+        if (item.getProfile().isInfiniteFuel()) return;
+        if (item.getFuel() <= 0) {
+            item.reFuel(p.getInventory());
             if (item.getFuel() <= 0) {
-                item.reFuel(p.getInventory());
-                if (item.getFuel() <= 0) {
-                    item.setEnabled(false);
-                    p.setFlying(false);
-                    return;
-                }
+                item.setEnabled(false);
+                p.setFlying(false);
+                p.setAllowFlight(false);
+                return;
             }
-            item.useFuel(1);
+        }
+        if (item.isEnabled()) {
+            if (p.isFlying()) {
+                handleOutOfFuelMessage(p, item, 20);
+                item.useFuel(20);
+            } else {
+                handleOutOfFuelMessage(p, item, 1);
+                item.useFuel(1);
+            }
+        }
+    }
+
+
+    private void handleOutOfFuelMessage(Player p, JetpackItem item, int subtraction) {
+        if (item.getFuel() > 0 && (item.getFuel() - subtraction) <= 0) {
+            p.sendMessage(plugin.getLocalizationManager().getConfiguration().getString("message-nofuel"));
         }
     }
 

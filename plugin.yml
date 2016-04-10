@@ -6,6 +6,11 @@ commands:
         description: AIO Jetpacks help
         usage: /jetpacks
         permission: aio.jetpacks.command.base
+    jp:
+        aliases: [jetpack]
+        description: Enable/disable your jetpack
+        usage: /jp
+        permission: aio.jetpacks.command.base
 permissions:
     aio.jetpacks.command.base:
         description: Allows you to use /jetpacks

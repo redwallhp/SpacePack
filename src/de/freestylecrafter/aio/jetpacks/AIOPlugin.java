@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,7 +62,8 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		this.getServer().getPluginManager().registerEvents(this, this);
 		
 		this.cmdExecutor = new CmdExecutor();
-		
+
+        this.getCommand("jp").setExecutor(this.cmdExecutor);
 		this.getCommand("jetpacks").setExecutor(this.cmdExecutor);
 		this.getCommand("jetpacks").setTabCompleter(this.cmdExecutor);
 		
@@ -81,7 +83,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 
         // Do recurring ticking stuff
         new JetPackEffectsTask(this).runTaskTimer(this, 20L, 8L);
-        new FuelDepletionTask(this).runTaskTimer(this, 20L, 1L);
+        new FuelDepletionTask(this).runTaskTimer(this, 20L, 20L);
 
 	}
 	
@@ -390,33 +392,18 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerToggleFlight(PlayerToggleFlightEvent e) {
-		this.getJetpackManager().checkJetpackItemForPlayer(e.getPlayer());
-		JetpackItem item = this.getJetpackManager().getJetpackItemForPlayer(e.getPlayer());
-		if (item != null) {
-			if (item.isEnabled()) {
-				item.setEnabled(false);
-			}
-			else {
-                item.setEnabled(true);
-			}
-		}
-	}
-	
-	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
 		Player p = e.getPlayer();
 		this.getJetpackManager().checkJetpackItemForPlayer(p);
 		JetpackItem item = this.getJetpackManager().getJetpackItemForPlayer(e.getPlayer());
-		if (item != null && item.isEnabled()) {
-			
+		if (item != null && item.isEnabled() && p.isFlying()) {
 			if (p.isSprinting()) {
                 p.setFlySpeed((float) item.getProfile().getFastSpeed());
             }
 			else {
                 p.setFlySpeed((float) item.getProfile().getNormalSpeed());
             }
-
 		}
 	}
+
 }

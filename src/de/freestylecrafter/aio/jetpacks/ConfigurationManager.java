@@ -75,7 +75,7 @@ public class ConfigurationManager
 			this.config.set("jetpacks.example.enchantments.PROTECTION_ENVIRONMENTAL", 5);
 			this.config.set("jetpacks.example.infiniteFuel", false);
 			this.config.set("jetpacks.example.fuel", "COAL");
-			this.config.set("jetpacks.example.ticksPerFuel", 300);
+			this.config.set("jetpacks.example.ticksPerFuel", 640);
 			this.config.set("jetpacks.example.normalSpeed", 0.1);
 			this.config.set("jetpacks.example.fastSpeed", 0.1);
 			this.config.set("jetpacks.example.effects", Collections.emptyMap());
