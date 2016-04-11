@@ -1,11 +1,11 @@
-package de.freestylecrafter.aio.jetpacks;
+package io.github.redwallhp.spacepack;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class PermissionsHelper
 {
-	private static final String BASE_PERMISSION = "aio.jetpacks";
+	private static final String BASE_PERMISSION = "spacepack";
 	private static final String JETPACKS_PERMISSION_COMMAND_BASE = BASE_PERMISSION + ".command.base";
 	private static final String JETPACKS_PERMISSION_COMMAND_CHEAT = BASE_PERMISSION + ".command.cheat";
 	private static final String JETPACKS_PERMISSION_COMMAND_RELOAD = BASE_PERMISSION + ".command.reload";

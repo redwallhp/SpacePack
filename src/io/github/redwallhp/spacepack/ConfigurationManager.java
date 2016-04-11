@@ -1,4 +1,4 @@
-package de.freestylecrafter.aio.jetpacks;
+package io.github.redwallhp.spacepack;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class ConfigurationManager
 {
 	private static final String CONFIG_FILE_NAME = "config.yml";
-	private static final String HEADER = "AIO Jetpacks configuration\nuse-permissions: Enable or disable permissions system\nmessage-equip: Message to be shown on equip, %name% -> Jetpacks name\nmessage-unequip: Message to be shown on unequip, %name% -> Jetpacks name\n" +
+	private static final String HEADER = "SpacePack configuration\nuse-permissions: Enable or disable permissions system\nmessage-equip: Message to be shown on equip, %name% -> Jetpacks name\nmessage-unequip: Message to be shown on unequip, %name% -> Jetpacks name\n" +
 		"jetpacks: You can add your own jetpacks here\n<name>: The jetpacks profile name\ndisplayName: Name the jetpack item should have\n" +
 		"item: The item that should be used as jetpack\nrecipe: To disable recipe, type []\n" +
 		"  - First recipe row, to leave a field empty, write NULL\n  - Second recipe row, to leave a field empty, write NULL\n  - Third recipe row, to leave a field empty, write NULL\n" +
@@ -72,7 +72,7 @@ public class ConfigurationManager
 			l.add("REDSTONE IRON_CHESTPLATE REDSTONE");
 			l.add("FEATHER BLAZE_ROD FEATHER");
 			this.config.set("jetpacks.example.recipe", l);
-			this.config.set("jetpacks.example.enchantments.PROTECTION_ENVIRONMENTAL", 5);
+			this.config.set("jetpacks.example.enchantments.PROTECTION_ENVIRONMENTAL", 1);
 			this.config.set("jetpacks.example.infiniteFuel", false);
 			this.config.set("jetpacks.example.fuel", "COAL");
 			this.config.set("jetpacks.example.ticksPerFuel", 640);

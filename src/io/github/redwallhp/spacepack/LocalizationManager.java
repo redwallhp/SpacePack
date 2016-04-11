@@ -1,4 +1,4 @@
-package de.freestylecrafter.aio.jetpacks;
+package io.github.redwallhp.spacepack;
 
 import java.io.File;
 import java.io.IOException;

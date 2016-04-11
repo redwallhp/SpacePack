@@ -1,17 +1,17 @@
-name: AIO-Jetpacks
-main: de.freestylecrafter.aio.jetpacks.AIOPlugin
+name: SpacePack
+main: io.github.redwallhp.spacepack.AIOPlugin
 version: ${project.version}
 commands:
     jetpacks:
-        description: AIO Jetpacks help
+        description: SpacePack help
         usage: /jetpacks
-        permission: aio.jetpacks.command.base
+        permission: spacepack.command.base
     jp:
         aliases: [jetpack]
         description: Enable/disable your jetpack
         usage: /jp
-        permission: aio.jetpacks.command.base
+        permission: spacepack.command.base
 permissions:
-    aio.jetpacks.command.base:
+    spacepack.command.base:
         description: Allows you to use /jetpacks
         default: op
