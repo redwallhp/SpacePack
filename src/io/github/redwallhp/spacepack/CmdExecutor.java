@@ -29,6 +29,12 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 			Player player = (Player) sender;
 			AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(player);
 			JetpackItem item = AIOPlugin.getInstance().getJetpackManager().getJetpackItemForPlayer(player);
+
+			if (AIOPlugin.getInstance().getWorldGuardHelper().playerInNoFlyRegion(player)) {
+				sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-nofly"));
+				return true;
+			}
+
 			if (item != null && item.getFuel() > 0) {
 				if (item.isEnabled()) {
 					item.setEnabled(false);

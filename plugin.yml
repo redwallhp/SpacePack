@@ -1,6 +1,7 @@
 name: SpacePack
 main: io.github.redwallhp.spacepack.AIOPlugin
 version: ${project.version}
+softdepend: [WorldGuard]
 commands:
     jetpacks:
         description: SpacePack help

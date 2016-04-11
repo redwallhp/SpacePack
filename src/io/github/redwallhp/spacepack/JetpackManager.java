@@ -139,8 +139,9 @@ public class JetpackManager
 			this.activeJetpacks.get(p.getUniqueId()).setEnabled(false);
 			this.activeJetpacks.remove(p.getUniqueId());
 
-			if (p.getGameMode() != GameMode.CREATIVE && p.getAllowFlight())
+			if (p.getGameMode() != GameMode.CREATIVE && p.getAllowFlight()) {
 				p.setAllowFlight(false);
+			}
 
 			if (profile.getPotionEffects() != null && !profile.getPotionEffects().isEmpty())
 			{
@@ -168,8 +169,9 @@ public class JetpackManager
 			{
 				return;
 			}
-			else
+			else {
 				this.removeJetpackItemForPlayer(p);
+			}
 		}
 
 		if (PermissionsHelper.canUseJetpack(i, p))

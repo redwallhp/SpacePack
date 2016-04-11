@@ -1,6 +1,8 @@
 package io.github.redwallhp.spacepack;
 
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
@@ -50,9 +52,17 @@ public class FuelDepletionTask extends BukkitRunnable {
 
 
     private void handleOutOfFuelMessage(Player p, JetpackItem item, int subtraction) {
-        if (item.getFuel() > 0 && (item.getFuel() - subtraction) <= 0) {
+        if (item.getFuel() > 0 && (item.getFuel() - subtraction) <= 0 && !playerHasFuelItems(p, item)) {
             p.sendMessage(plugin.getLocalizationManager().getConfiguration().getString("message-nofuel"));
         }
+    }
+
+
+    private boolean playerHasFuelItems(Player player, JetpackItem item) {
+        for (ItemStack i : player.getInventory().getContents()) {
+            if (i != null && i.getType().equals(item.getProfile().getFuel())) return true;
+        }
+        return false;
     }
 
 

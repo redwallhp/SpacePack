@@ -82,6 +82,11 @@ public class ConfigurationManager
 			
 			changedConfig = true;
 		}
+
+		if (!this.config.isList("nofly_regions")) {
+			this.config.set("nofly_regions", Collections.emptyList());
+			changedConfig = true;
+		}
 		
 		if (changedConfig)
 		{

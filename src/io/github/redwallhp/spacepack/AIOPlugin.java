@@ -34,6 +34,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	private ConfigurationManager configManager;
 	private LocalizationManager localizationManager;
 	private JetpackManager jetpackManager;
+    private WorldGuardHelper worldGuardHelper;
 	
 	private CmdExecutor cmdExecutor;
 	
@@ -53,11 +54,12 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		}
 		
 		this.jetpackManager = new JetpackManager(this.getConfigManager().getConfiguration());
+
+        this.worldGuardHelper = new WorldGuardHelper();
 		
 		this.getServer().getPluginManager().registerEvents(this, this);
 		
 		this.cmdExecutor = new CmdExecutor();
-
         this.getCommand("jp").setExecutor(this.cmdExecutor);
 		this.getCommand("jetpacks").setExecutor(this.cmdExecutor);
 		this.getCommand("jetpacks").setTabCompleter(this.cmdExecutor);
@@ -115,8 +117,12 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	{
 		return this.jetpackManager;
 	}
-	
-	@EventHandler
+
+    public WorldGuardHelper getWorldGuardHelper() {
+        return worldGuardHelper;
+    }
+
+    @EventHandler
 	public void onPlayerJoin(final PlayerJoinEvent e)
 	{		
 		// Run this after 20 ticks because some plugins are updating variables
@@ -397,6 +403,12 @@ public class AIOPlugin extends JavaPlugin implements Listener {
             }
 			else {
                 p.setFlySpeed((float) item.getProfile().getNormalSpeed());
+            }
+            if (getWorldGuardHelper().playerInNoFlyRegion(p)) {
+                item.setEnabled(false);
+                p.setFlying(false);
+                p.setAllowFlight(false);
+                p.sendMessage(getLocalizationManager().getConfiguration().getString("message-nofly"));
             }
 		}
 	}
