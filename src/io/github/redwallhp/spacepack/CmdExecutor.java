@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,8 +21,8 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 
 		if (cmd.getName().equalsIgnoreCase("jp")) {
 
-			if (!(sender instanceof Player) || !PermissionsHelper.canCommandBase((Player) sender)) {
-				sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-general-nopermissions"));
+			if (!(sender instanceof Player)) {
+				sender.sendMessage(ChatColor.RED + "Console can't wear a jetpack...");
 				return true;
 			}
 
