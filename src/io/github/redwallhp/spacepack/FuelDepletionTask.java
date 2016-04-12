@@ -35,6 +35,7 @@ public class FuelDepletionTask extends BukkitRunnable {
             if (item.getFuel() <= 0) {
                 item.setEnabled(false);
                 p.setFlying(false);
+                p.setFallDistance(0);
                 p.setAllowFlight(false);
                 return;
             }

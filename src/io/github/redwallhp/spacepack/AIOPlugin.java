@@ -410,6 +410,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
             if (getWorldGuardHelper().playerInNoFlyRegion(p)) {
                 item.setEnabled(false);
                 p.setFlying(false);
+                p.setFallDistance(0);
                 p.setAllowFlight(false);
                 if (getConfigManager().getConfiguration().getBoolean("nerf_nofly_fall") && getFallHeight(p) > 3) {
                     p.setMetadata("nerf_fall_damage", new FixedMetadataValue(this, true));
@@ -439,6 +440,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
             block = block.getRelative(BlockFace.DOWN);
             y = block.getY();
         }
+        p.sendMessage("Height: " + (pY - y));
         return pY - y;
     }
 

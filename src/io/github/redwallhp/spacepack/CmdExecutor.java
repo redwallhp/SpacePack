@@ -39,6 +39,7 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 				if (item.isEnabled()) {
 					item.setEnabled(false);
 					if (player.getGameMode() != GameMode.CREATIVE && player.getAllowFlight()) {
+						player.setFallDistance(0);
 						player.setAllowFlight(false);
 					}
 					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-disable"));
