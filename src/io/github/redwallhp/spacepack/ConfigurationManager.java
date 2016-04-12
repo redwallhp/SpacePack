@@ -62,6 +62,10 @@ public class ConfigurationManager
 			this.config.set("trails", true);
 			changedConfig = true;
 		}
+		if (!this.config.isBoolean("nerf_nofly_fall")) {
+			this.config.set("nerf_nofly_fall", false);
+			changedConfig = true;
+		}
 		
 		if (!this.config.isConfigurationSection("jetpacks"))
 		{

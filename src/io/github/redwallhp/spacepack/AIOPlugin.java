@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +27,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AIOPlugin extends JavaPlugin implements Listener {
@@ -408,9 +411,35 @@ public class AIOPlugin extends JavaPlugin implements Listener {
                 item.setEnabled(false);
                 p.setFlying(false);
                 p.setAllowFlight(false);
+                if (getConfigManager().getConfiguration().getBoolean("nerf_nofly_fall") && getFallHeight(p) > 3) {
+                    p.setMetadata("nerf_fall_damage", new FixedMetadataValue(this, true));
+                }
                 p.sendMessage(getLocalizationManager().getConfiguration().getString("message-nofly"));
             }
 		}
 	}
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
+        if (player.hasMetadata("nerf_fall_damage") && event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+            if (event.getDamage() > 2) {
+                event.setDamage(2);
+            }
+            player.removeMetadata("nerf_fall_damage", this);
+        }
+    }
+
+    private int getFallHeight(Player p) {
+        int pY = (int) p.getLocation().getY();
+        int y = 0;
+        Block block = p.getLocation().getBlock();
+        while (!(block.getRelative(BlockFace.DOWN).getType().isSolid())) {
+            block = block.getRelative(BlockFace.DOWN);
+            y = block.getY();
+        }
+        return pY - y;
+    }
 
 }
