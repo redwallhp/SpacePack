@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -18,13 +19,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -394,6 +389,15 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 			}
 		}
 	}
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onToggleFlight(PlayerToggleFlightEvent event) {
+        if (event.isFlying()) {
+            event.getPlayer().setFlying(true);
+        } else {
+            event.getPlayer().setFlying(false);
+        }
+    }
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
@@ -440,7 +444,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
             block = block.getRelative(BlockFace.DOWN);
             y = block.getY();
         }
-        p.sendMessage("Height: " + (pY - y));
         return pY - y;
     }
 
