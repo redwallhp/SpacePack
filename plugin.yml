@@ -7,15 +7,7 @@ commands:
         description: SpacePack help
         usage: /jetpacks
         permission: spacepack.command.base
-    jp:
-        aliases: [jetpack]
-        description: Enable/disable your jetpack
-        usage: /jp
-        permission: spacepack.jp
 permissions:
     spacepack.command.base:
         description: Allows you to use /jetpacks
         default: op
-    spacepack.jp:
-        description: Allows the use of the /jp toggle
-        default: true

@@ -12,23 +12,27 @@ import java.util.UUID;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 public class JetpackManager
 {
+
+
 	private List<Jetpack> jetpackProfiles;
 	private HashMap<UUID, JetpackItem> activeJetpacks;
 
-	public JetpackManager(YamlConfiguration config)
-	{
+
+	public JetpackManager(YamlConfiguration config) {
 		this.reloadProfiles(config);
 	}
 
-	public void reloadProfiles(YamlConfiguration config)
-	{
+
+	public void reloadProfiles(YamlConfiguration config) {
 		if (config == null)
 			return;
 
@@ -68,8 +72,8 @@ public class JetpackManager
 		this.jetpackProfiles = jetpackProfiles_tmp;
 	}
 
-	public void unregisterOldRecipes()
-	{
+
+	public void unregisterOldRecipes() {
 		Iterator<Recipe> i = AIOPlugin.getInstance().getServer().recipeIterator();
 		while (i.hasNext())
 		{
@@ -81,13 +85,13 @@ public class JetpackManager
 		}
 	}
 
-	public List<Jetpack> getProfiles()
-	{
+
+	public List<Jetpack> getProfiles() {
 		return this.jetpackProfiles;
 	}
 
-	public Jetpack getProfileByName(String name)
-	{
+
+	public Jetpack getProfileByName(String name) {
 		for (Jetpack jetpackProfile : AIOPlugin.getInstance().getJetpackManager().getProfiles())
 		{
 			if (jetpackProfile.getName().equals(name))
@@ -96,13 +100,13 @@ public class JetpackManager
 		return null;
 	}
 
-	public HashMap<UUID, JetpackItem> getActiveJetpackItems()
-	{
+
+	public HashMap<UUID, JetpackItem> getActiveJetpackItems() {
 		return this.activeJetpacks;
 	}
 
-	public void checkJetpackItemForPlayer(Player p)
-	{
+
+	public void checkJetpackItemForPlayer(Player p) {
 		if (p == null)
 			return;
 
@@ -123,16 +127,16 @@ public class JetpackManager
 		}
 	}
 
-	public JetpackItem getJetpackItemForPlayer(Player p)
-	{
+
+	public JetpackItem getJetpackItemForPlayer(Player p) {
 		if (p != null && this.activeJetpacks.containsKey(p.getUniqueId()))
 			return this.activeJetpacks.get(p.getUniqueId());
 
 		return null;
 	}
 
-	public void removeJetpackItemForPlayer(Player p)
-	{
+
+	public void removeJetpackItemForPlayer(Player p) {
 		if (this.activeJetpacks.containsKey(p.getUniqueId()))
 		{
 			Jetpack profile = this.activeJetpacks.get(p.getUniqueId()).getProfile();
@@ -156,8 +160,8 @@ public class JetpackManager
 		}
 	}
 
-	private void addJetpackItemForPlayer(Player p, JetpackItem i)
-	{
+
+	private void addJetpackItemForPlayer(Player p, JetpackItem i) {
 		if (p == null || i == null)
 			return;
 
@@ -190,4 +194,48 @@ public class JetpackManager
 			p.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-equip", "").replace("%name%", "#" + name));
 		}
 	}
+
+
+	public void handleActivation(Player player) {
+
+		AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(player);
+		JetpackItem item = AIOPlugin.getInstance().getJetpackManager().getJetpackItemForPlayer(player);
+
+		if (AIOPlugin.getInstance().getWorldGuardHelper().playerInNoFlyRegion(player)) {
+			player.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-nofly"));
+			return;
+		}
+
+		if (item != null && item.getFuel() > 0) {
+			if (item.isEnabled()) {
+				item.setEnabled(false);
+				if (player.getGameMode() != GameMode.CREATIVE && player.getAllowFlight()) {
+					player.setFallDistance(0);
+					player.setAllowFlight(false);
+					player.setFlying(false);
+				}
+				player.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-disable"));
+			}
+			else {
+				item.setEnabled(true);
+				if (player.getGameMode() != GameMode.CREATIVE && !player.getAllowFlight()) {
+					player.setAllowFlight(true);
+					player.setFlying(true);
+					if (((Entity) player).isOnGround()) {
+						player.setVelocity(player.getVelocity().add(new Vector(0, 1, 0)));
+					}
+				}
+				player.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-enable"));
+			}
+		}
+		else if (item != null && item.getFuel() < 1) {
+			player.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-nofuel"));
+		}
+		else {
+			player.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-nopack"));
+		}
+
+	}
+
+
 }

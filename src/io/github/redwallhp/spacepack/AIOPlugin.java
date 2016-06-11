@@ -1,6 +1,8 @@
 package io.github.redwallhp.spacepack;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -33,8 +35,9 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 	private LocalizationManager localizationManager;
 	private JetpackManager jetpackManager;
     private WorldGuardHelper worldGuardHelper;
-	
 	private CmdExecutor cmdExecutor;
+
+	private HashMap<UUID, Long> lastCrouchTimes;
 	
 	@Override
 	public void onEnable()
@@ -58,7 +61,6 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 		this.getServer().getPluginManager().registerEvents(this, this);
 		
 		this.cmdExecutor = new CmdExecutor();
-        this.getCommand("jp").setExecutor(this.cmdExecutor);
 		this.getCommand("jetpacks").setExecutor(this.cmdExecutor);
 		this.getCommand("jetpacks").setTabCompleter(this.cmdExecutor);
 		
@@ -75,6 +77,8 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 				}
 			}
 		}, 20);
+
+		lastCrouchTimes = new HashMap<UUID, Long>();
 
         // Do recurring ticking stuff
         new JetPackEffectsTask(this).runTaskTimer(this, 20L, 8L);
@@ -392,12 +396,26 @@ public class AIOPlugin extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onToggleFlight(PlayerToggleFlightEvent event) {
-        if (event.isFlying()) {
-            event.getPlayer().setFlying(true);
-        } else {
-            event.getPlayer().setFlying(false);
-        }
+		AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(event.getPlayer());
+		JetpackItem item = AIOPlugin.getInstance().getJetpackManager().getJetpackItemForPlayer(event.getPlayer());
+		if (item.isEnabled()) {
+			event.setCancelled(true);
+		}
     }
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
+		Player player = event.getPlayer();
+		if (event.isSneaking()) {
+			long now = System.currentTimeMillis();
+			if (lastCrouchTimes.containsKey(player.getUniqueId()) && (now - lastCrouchTimes.get(player.getUniqueId()) < 500)) {
+				lastCrouchTimes.remove(player.getUniqueId());
+				jetpackManager.handleActivation(event.getPlayer());
+			} else {
+				lastCrouchTimes.put(player.getUniqueId(), now);
+			}
+		}
+	}
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {

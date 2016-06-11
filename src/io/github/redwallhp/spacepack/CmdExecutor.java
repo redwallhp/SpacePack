@@ -19,51 +19,6 @@ public class CmdExecutor implements CommandExecutor, TabCompleter
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 
 
-		if (cmd.getName().equalsIgnoreCase("jp")) {
-
-			if (!(sender instanceof Player)) {
-				sender.sendMessage(ChatColor.RED + "Console can't wear a jetpack...");
-				return true;
-			}
-
-			Player player = (Player) sender;
-			AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(player);
-			JetpackItem item = AIOPlugin.getInstance().getJetpackManager().getJetpackItemForPlayer(player);
-
-			if (AIOPlugin.getInstance().getWorldGuardHelper().playerInNoFlyRegion(player)) {
-				sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-nofly"));
-				return true;
-			}
-
-			if (item != null && item.getFuel() > 0) {
-				if (item.isEnabled()) {
-					item.setEnabled(false);
-					if (player.getGameMode() != GameMode.CREATIVE && player.getAllowFlight()) {
-						player.setFallDistance(0);
-						player.setAllowFlight(false);
-					}
-					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-disable"));
-				}
-				else {
-					item.setEnabled(true);
-					if (player.getGameMode() != GameMode.CREATIVE && !player.getAllowFlight()) {
-						player.setAllowFlight(true);
-					}
-					sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-enable"));
-				}
-			}
-			else if (item != null && item.getFuel() < 1) {
-				sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-nofuel"));
-			}
-			else {
-				sender.sendMessage(AIOPlugin.getInstance().getLocalizationManager().getConfiguration().getString("message-nopack"));
-			}
-
-			return true;
-
-		}
-
-
 		if (cmd.getName().equalsIgnoreCase("jetpacks"))
 		{
 			if (sender instanceof Player)

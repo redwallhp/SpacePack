@@ -133,7 +133,7 @@ public class LocalizationManager
 		}
 		if (!this.languageConfig.isString("message-equip"))
 		{
-			this.languageConfig.set("message-equip", ChatColor.DARK_AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%"  + ChatColor.GREEN + " is now equipped." + ChatColor.YELLOW + " [Use /jp to enable]");
+			this.languageConfig.set("message-equip", ChatColor.DARK_AQUA + "[Jetpacks] " + ChatColor.GRAY + "%name%"  + ChatColor.GREEN + " is now equipped." + ChatColor.YELLOW + " [Double-tap Shift to fly]");
 			changedConfig = true;
 		}
 		if (!this.languageConfig.isString("message-unequip"))
