@@ -30,7 +30,7 @@ public class JetPackEffectsTask extends BukkitRunnable {
             if (item.isEnabled() && player.isFlying()) {
                 Location loc = player.getLocation().subtract(new Vector(0, 1, 0));
                 if (trails) player.playEffect(loc, Effect.MOBSPAWNER_FLAMES, null);
-                if (sounds) player.playSound(loc, Sound.FIZZ, 0.1f, 0.5f);
+                if (sounds) player.playSound(loc, Sound.ENTITY_TNT_PRIMED, 0.1f, 0.5f);
             }
         }
     }
