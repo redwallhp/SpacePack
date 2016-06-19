@@ -398,7 +398,7 @@ public class AIOPlugin extends JavaPlugin implements Listener {
     public void onToggleFlight(PlayerToggleFlightEvent event) {
 		AIOPlugin.getInstance().getJetpackManager().checkJetpackItemForPlayer(event.getPlayer());
 		JetpackItem item = AIOPlugin.getInstance().getJetpackManager().getJetpackItemForPlayer(event.getPlayer());
-		if (item.isEnabled()) {
+		if (item != null && item.isEnabled()) {
 			event.setCancelled(true);
 		}
     }
