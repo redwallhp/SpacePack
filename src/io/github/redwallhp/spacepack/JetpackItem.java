@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class JetpackItem
@@ -194,6 +195,19 @@ public class JetpackItem
 				i.remove(smallestStack);
 			else
 				smallestStack.setAmount(amount - 1);
+
+			// Fix for Bukkit API inconsistency with the off-hand.
+			// i.getContents() includes the off-hand slot, but i.remove()
+			// will not remove an item from the off-hand.
+			if (i instanceof PlayerInventory) {
+				PlayerInventory pInv = (PlayerInventory) i;
+				ItemStack offHandItem = pInv.getItemInOffHand();
+				if (offHandItem.equals(smallestStack) && offHandItem.getAmount() == 1) {
+					if (offHandItem.getAmount() == amount) { //was not decremented successfully
+						pInv.setItemInOffHand(null);
+					}
+				}
+			}
 			
 			this.reFuel(this.getProfile().getTicksPerFuel());
 		}
